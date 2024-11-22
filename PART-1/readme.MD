@@ -142,6 +142,8 @@ Buckets names are unique in all AWS accounts. just like domains are unique in th
 It avoids conflicts when accessing S3 buckets via public URLs like https://<bucket-name>.s3.amazonaws.com
 
 **Naming Rules:**
+Although bucket names are globally unique, the bucket data is stored regionally, and you must specify a region when creating a bucket.
+
 Bucket names must:
 * Be between 3 and 63 characters long.
 * Consist only of lowercase letters, numbers, hyphens (-), and periods (.).
