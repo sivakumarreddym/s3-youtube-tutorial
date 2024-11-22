@@ -151,5 +151,5 @@ Bucket names must:
 While naming bucket, use elements such as company name, project name, component name, environment, timestamp, etc.
 
 For example:
-**joindevops-roboshop-catalogue-dev**
-**projectname-app-logs-2024**
+* **joindevops-roboshop-catalogue-dev**
+* **projectname-app-logs-2024**
