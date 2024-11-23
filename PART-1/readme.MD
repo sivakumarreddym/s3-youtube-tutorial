@@ -108,6 +108,10 @@ Applications that handle file uploads (e.g., documents, images, videos) can use 
 * **Remote state storage:**
 Terraform stores the remote state in S3 with DynamoDB locking.
 
+* **Backups storage:**
+S3 is popular service for storing database backups, server snapshots, application artifacts and configuration backups, log backups, etc.
+
+
 # AWS Storage Comparison: EBS vs EFS vs S3
 
 | **Feature**               | **EBS**                                                                                                                                                                                                 | **EFS**                                                                                                                           | **S3**                                                                                                                            |
