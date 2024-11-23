@@ -105,6 +105,9 @@ S3 is a great place to store logs from applications, services, or AWS resources 
 * **Application Data Storage:**
 Applications that handle file uploads (e.g., documents, images, videos) can use S3 to store user-generated content reliably and accessibly.
 
+* **Remote state storage:**
+Terraform stores the remote state in S3 with DynamoDB locking.
+
 # AWS Storage Comparison: EBS vs EFS vs S3
 
 | **Feature**               | **EBS**                                                                                                                                                                                                 | **EFS**                                                                                                                           | **S3**                                                                                                                            |
