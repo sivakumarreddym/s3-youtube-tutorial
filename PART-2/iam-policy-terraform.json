@@ -1,0 +1,24 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowEC2FullAccess",
+            "Effect": "Allow",
+            "Action": "ec2:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowS3AccessForTerraformState",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::s3-tutorial-part2-policies",
+                "arn:aws:s3:::s3-tutorial-part2-policies/*"
+            ]
+        }
+    ]
+}
