@@ -203,6 +203,12 @@ aws s3 rm s3://s3-tutorial-part2-policies/terraform-modules.mp4 --profile sivaku
 * Users in ACC-B needs access to S3 bucket logistics folder in ACC-A. 
 * Here my bucket name is s3-tutorial-part2-policies and folder inside bucket is logistics.
 
+* Create ramesh user in ACC-B
+* Configure his credentials in your laptop.
+```bash
+aws configure --profile ramesh
+```
+
 IAM Policy of user in ACC-B
 ```json
 {
