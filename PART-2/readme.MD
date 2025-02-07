@@ -198,11 +198,10 @@ aws s3 rm s3://s3-tutorial-part2-policies/terraform-modules.mp4 --profile sivaku
 
 
 ### **4️⃣ Cross-Account Access**
-* Image there are 2 accounts. ACC-A where S3 bucket exist
+* Imagine there are 2 accounts. ACC-A where S3 bucket exist
 * ACC-B which is external vendor account. 
 * Users in ACC-B needs access to S3 bucket logistics folder in ACC-A. 
 * Here my bucket name is s3-tutorial-part2-policies and folder inside bucket is logistics.
-
 * Create ramesh user in ACC-B
 * Configure his credentials in your laptop.
 ```bash
