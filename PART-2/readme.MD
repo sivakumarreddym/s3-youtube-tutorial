@@ -7,12 +7,19 @@ Amazon S3 access control can be managed through two primary methods:
 
 To ensure security and proper access control, it is important to combine both IAM and bucket policies effectively.
 
+#### Setup
+* I am using GitBash as command line in my laptop.
+* I am using 2 AWS accounts. Replace with your accounts.
+    * ACC-A 315069654700
+    * ACC-B 752692907119
+
+
 ## 📌 IAM Policies
 IAM policies define what **users and roles** can do with S3, such as **ListBucket, GetObject, PutObject, DeleteObject**, etc.
 
 ### **Scenario: Restrict a User to Read, List, and Upload Objects in an S3 Bucket**
 #### **Steps:**
-1. **Create an IAM user** (`sivakumar`).=
+1. **Create an IAM user** (`sivakumar`)
 2. **Attach an IAM policy** to grant **read, list, and upload** access to a specific bucket.
 3. **Login with the IAM user** and attempt to list and upload an object.
 4. **Try deleting an object** – it should fail.
@@ -44,6 +51,14 @@ IAM policies define what **users and roles** can do with S3, such as **ListBucke
     ]
 }
 ```
+You can configure this user in your laptop using below command.
+
+```bash
+aws configure --profile sivakumar
+```
+
+Provide the access-key and secret-key created while creating the user.
+
 ✅ **Effect**: Grants the user permission to list, read, and upload objects but not delete them.
 
 ---
@@ -83,7 +98,7 @@ Allow **public read access** to all objects.
 Deny all requests that **don’t use HTTPS**.
 Use below command to see aws cli is using HTTPS endpoint
 ```
-aws s3 ls s3://s3-tutorial-part2-policies/ --debug
+aws s3 ls s3://s3-tutorial-part2-policies/ --debug --profile sivakumar
 ```
 
 ```json
@@ -111,7 +126,8 @@ aws s3 ls s3://s3-tutorial-part2-policies/ --debug
 Deny **deletion** unless the request includes an MFA token. 
 * Users can't delete the objects from the console
 * MFA should be enabled for the user
-* User should get temporary session credentials before removing object
+* User should get temporary session credentials before removing object.
+
 IAM policy must contain
 ```json
 {
@@ -136,11 +152,15 @@ Bucket policy must contain below policy
     "Statement": [
         {
             "Effect": "Deny",
-            "Principal": "AWS": "arn:aws:iam::315069654700:user/sivakumar",
+            "Principal": {
+                "AWS": "arn:aws:iam::315069654700:user/sivakumar"
+            },
             "Action": "s3:DeleteObject",
             "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/*",
             "Condition": {
-                "BoolIfExists": {"aws:MultiFactorAuthPresent": "false"}
+                "BoolIfExists": {
+                    "aws:MultiFactorAuthPresent": "false"
+                }
             }
         }
     ]
@@ -150,8 +170,8 @@ Once above policies are set. We have to perform following actions.
 * Run aws configure in your laptop gitbash console.
 * Provide user access key and secret key.
 * issue sts command with ARN of MFA device and MFA token
-```
-aws sts get-session-token --serial-number arn:aws:iam::315069654700:mfa/MyMobile --token-code 303858
+```bash
+aws sts get-session-token --serial-number arn:aws:iam::315069654700:mfa/sivakumar-android --token-code 303858 --profile sivakumar
 ```
 output looks like below
 ```json
@@ -166,13 +186,13 @@ output looks like below
 ```
 * Use these temporary credentials to delete object in the bucket.
 ```bash
-aws configure --profile mfa-session set aws_secret_access_key <secret-access-key>
-aws configure --profile mfa-session set aws_access_key_id <access-key>
-aws configure --profile mfa-session set aws_session_token <token>
+aws configure --profile sivakumar-mfa-session set aws_access_key_id <access-key>
+aws configure --profile sivakumar-mfa-session set aws_secret_access_key <secret-access-key>
+aws configure --profile sivakumar-mfa-session set aws_session_token <token>
 ```
 Now you can issue to remove object
 ```bash
-aws s3 rm s3://s3-tutorial-part2-policies/s3-part-2.drawio.svg --profile mfa-session
+aws s3 rm s3://s3-tutorial-part2-policies/terraform-modules.mp4 --profile sivakumar-mfa-session
 ```
 ✅ **Effect**: Even if credentials are leaked, objects cannot be deleted without MFA authentication.
 
@@ -225,7 +245,6 @@ S3 Bucket policy should contain
     "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/logistics/*"
 },
 {
-    {
     "Effect": "Allow",
     "Principal": {
         "AWS": "arn:aws:iam::752692907119:user/ramesh"
@@ -238,7 +257,7 @@ S3 Bucket policy should contain
         }
     }
 }
-}
+
 ```
 ✅ **Effect**: Allows users from ACC-B to read and put objects in logistics folder only.
 
