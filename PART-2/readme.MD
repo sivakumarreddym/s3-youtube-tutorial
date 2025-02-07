@@ -7,6 +7,7 @@ Amazon S3 access control can be managed through two primary methods:
 
 To ensure **security** 🔒 and proper **access control**, it is important to combine both IAM and bucket policies effectively.
 
+IAM Full Course(Telugu): https://www.youtube.com/playlist?list=PL1jY4BuFJn1fqijDbvsNOobBj5zOb_jvt
 ---
 
 ## ⚙️ Setup
