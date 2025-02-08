@@ -168,7 +168,7 @@ aws s3 ls s3://s3-tutorial-part2-policies/ --debug --profile sivakumar
             "Action": "s3:DeleteObject",
             "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/*",
             "Condition": {
-                "BoolIfExists": {
+                "Bool": {
                     "aws:MultiFactorAuthPresent": "false"
                 }
             }
