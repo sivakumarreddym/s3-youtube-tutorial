@@ -1,0 +1,62 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/*"
+        },
+        {
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::s3-tutorial-part2-policies",
+                "arn:aws:s3:::s3-tutorial-part2-policies/*"
+            ],
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "false"
+                }
+            }
+        },
+        {
+            "Effect": "Deny",
+            "Principal": {
+                "AWS": "arn:aws:iam::<ACC-A>:user/sivakumar"
+            },
+            "Action": "s3:DeleteObject",
+            "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/*",
+            "Condition": {
+                "Bool": {
+                    "aws:MultiFactorAuthPresent": "false"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<ACC-B>:user/ramesh"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::s3-tutorial-part2-policies/logistics/*"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<ACC-B>:user/ramesh"
+            },
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::s3-tutorial-part2-policies",
+            "Condition": {
+                "StringLike": {
+                    "s3:prefix": "logistics/*"
+                }
+            }
+        }
+    ]
+}
